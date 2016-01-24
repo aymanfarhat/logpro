@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+        <title>Log pro</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+              padding-top: 70px;
+            }
+            footer {
+              padding: 30px 0;
+            }
+        </style>
+    </head>
+  <body>
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><i class="glyphicon glyphicon-fire" style="color:red"></i> Log Pro</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="#about"><i class="glyphicon glyphicon-info-sign"></i> About</a></li>
+                    <li><a href="#contact"><i class="glyphicon glyphicon-random"></i> Fork</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row row-offcanvas row-offcanvas-right">
+            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="glyphicon glyphicon-equalizer"></i> Filters</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="ip_address">IP Address</label>
+                            <input type="text" class="form-control" id="ip_address" placeholder="IP Adrress">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-9">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i> Log File Data</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h2>Feed me an Access Log File!</h1>
+                            <h4>* Apache or Nginx in Common Log Format</h1>
+
+                            <input type="file" id="uploadField" class="ui blue labeled icon button" />
+                            <div class="ui horizontal divider">Or</div>
+                            <button class="ui teal labeled icon button" type="button" id="fetchSampleDataBtn">
+                            Fetch a sample dataset
+                            <i class="random icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <footer>
+            <p>&copy; Log pro</p>
+        </footer>
+    </div>
+
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script>
+        System.config({
+                transpiler: 'typescript',
+                defaultExtension: 'js',
+                baseURL: '/app_build'
+            });
+
+        System.import('app.module.js').then(null, console.error.bind(console));
+    </script>
+  </body>
+</html>
+
