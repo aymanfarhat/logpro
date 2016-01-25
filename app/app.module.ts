@@ -17,7 +17,7 @@ export class UIModule {
             let dataModule = new DataModule();
 
             dataModule.getSampleData().then(function(response) {
-                console.log(response);
+                console.log(dataModule.parseAccessLogData(response));
             }, function (error) {
                 console.log(error);
             });
