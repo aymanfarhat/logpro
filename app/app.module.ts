@@ -2,7 +2,7 @@ import {DataModule} from './data.module.js';
 
 export class AppModule {
     constructor() { 
-        var dataModule = new DataModule(),
+        let dataModule = new DataModule(),
             uiModule  = new UIModule();
     }
 }
@@ -14,7 +14,7 @@ export class UIModule {
         this.sampleDataBtn = document.getElementById('fetchSampleDataBtn');
 
         this.sampleDataBtn.addEventListener('click', function (e) {
-            var dataModule = new DataModule();
+            let dataModule = new DataModule();
 
             dataModule.getSampleData().then(function(response) {
                 console.log(response);
@@ -25,4 +25,4 @@ export class UIModule {
     }
 }
 
-var app = new AppModule();
+let app = new AppModule();

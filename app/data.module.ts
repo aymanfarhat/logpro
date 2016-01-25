@@ -1,7 +1,7 @@
 class Request {
     get(url, resolve, reject) {
         return new Promise(function (resolve, reject) {
-            var request = new XMLHttpRequest();
+            let request = new XMLHttpRequest();
 
             request.open('GET', url, true);
 
