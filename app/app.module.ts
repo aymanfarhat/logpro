@@ -1,11 +1,28 @@
 import {DataModule} from './data.module.js';
 
-let dataModule = new DataModule();
-
-console.log(dataModule.getData());
-
 export class AppModule {
-    constructor(private _dataModule: DataModule) { 
-        console.log(_dataModule.getData());
+    constructor() { 
+        var dataModule = new DataModule(),
+            uiModule  = new UIModule();
     }
 }
+
+export class UIModule {
+    sampleDataBtn : HTMLElement;
+
+    constructor() { 
+        this.sampleDataBtn = document.getElementById('fetchSampleDataBtn');
+
+        this.sampleDataBtn.addEventListener('click', function (e) {
+            var dataModule = new DataModule();
+
+            dataModule.getSampleData().then(function(response) {
+                console.log(response);
+            }, function (error) {
+                console.log(error);
+            });
+        });
+    }
+}
+
+var app = new AppModule();
