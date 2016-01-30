@@ -14,16 +14,39 @@ export class UIModule {
         this.sampleDataBtn.addEventListener('click', this.dataBtnClick.bind(this));
     }
 
-    toggleDataView(state: Boolean) {
+    private toggleDataView(state: Boolean) {
         this.introContainer.style.display = (state) ? 'none' : 'block';
         this.dataContainer.style.display = (state) ? 'block' : 'none';
     };
 
-    renderDataTable(data: Array) {
-        console.log(data); 
+    private renderDataTable(data: Array) {
+        let templateOutput = '';
+
+        for (logRow of data) {
+            templateOutput += 
+                `<tr> 
+                    <td>${logRow.ip}</td> 
+                    <td>${logRow.method}</td> 
+                    <td>${logRow.time}</td> 
+                </tr> `;
+        }
+
+        this.dataContainer.innerHTML = 
+            `<table class="table table-striped">
+                <thead> 
+                    <tr> 
+                        <th>IP</th> 
+                        <th>Method</th> 
+                        <th>Time</th> 
+                    </tr> 
+                </thead> 
+                <tbody>
+                    ${templateOutput}
+                </tbody>
+            </table>`;
     }
 
-    dataBtnClick() {
+    private dataBtnClick() {
         this.dataService.getSampleData().then((response) => {
             let parsedLog = this.dataService.parseAccessLogData(response);
 
