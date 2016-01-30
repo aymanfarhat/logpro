@@ -20,28 +20,40 @@ export class UIModule {
     };
 
     private renderDataTable(data: Array) {
-        let templateOutput = '';
+        let bodyOutput = '',
+            headOutput = '',
+            columns = {
+                'ip': 'IP',
+                'method': 'Method',
+                'time': 'Date / Time',
+                'userAgent': 'User Agent'
+            };
+
+        for (colKey in columns) {
+            headOutput += `<th>${columns[colKey]}</th>`;
+        }
 
         for (logRow of data) {
-            templateOutput += 
-                `<tr> 
-                    <td>${logRow.ip}</td> 
-                    <td>${logRow.method}</td> 
-                    <td>${logRow.time}</td> 
-                </tr> `;
+            let row = '';
+
+            for (colKey in columns) {
+                if (logRow.hasOwnProperty(colKey)) {
+                    row += `<td>${logRow[colKey]}</td>`;
+                }
+            }
+
+            bodyOutput += `<tr>${row}</tr>`; 
         }
 
         this.dataContainer.innerHTML = 
             `<table class="table table-striped">
                 <thead> 
                     <tr> 
-                        <th>IP</th> 
-                        <th>Method</th> 
-                        <th>Time</th> 
+                        ${headOutput}
                     </tr> 
                 </thead> 
                 <tbody>
-                    ${templateOutput}
+                    ${bodyOutput}
                 </tbody>
             </table>`;
     }
