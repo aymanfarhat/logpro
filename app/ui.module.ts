@@ -11,7 +11,7 @@ export class UIModule {
 
         this.dataColumns = appConfig.dataTableColumns;
 
-        this.registerElements([
+        this.elements = this.registerElements([
             'sampleDataBtn',
             'introContainer',
             'dataContainer',
@@ -22,9 +22,13 @@ export class UIModule {
     }
 
     private registerElements(elementIds) {
-        for (element of elementIds) {
-            this.elements[element] = document.getElementById('sampleDataBtn');
-        }
+        let elements = [];
+
+        elementIds.forEach((element, index) => {
+            elements[element] = document.getElementById(element);
+        });
+
+        return elements;
     };
 
     private registerEvents() {
