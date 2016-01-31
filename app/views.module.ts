@@ -29,5 +29,19 @@ export class ViewsModule {
                         ${bodyOutput}
                     </tbody>
                 </table>`;
-    }
+    };
+
+    renderFilterForm (columns: Object) { 
+        let bodyOutput = '';
+
+        for (colKey in columns) {
+            bodyOutput += 
+                `<div class="form-group">
+                    <label for="${colKey}">${columns[colKey]}</label>
+                    <input type="text" class="form-control" id="${colKey}" data-column="${colKey}" placeholder="${columns[colKey]}">
+                </div>`;
+        }
+
+        return bodyOutput;
+    };
 }

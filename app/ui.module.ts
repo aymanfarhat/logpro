@@ -5,12 +5,15 @@ export class UIModule {
     sampleDataBtn : HTMLElement;
     introContainer: HTMLElement;
     dataContainer: HTMLElement;
+    filtersContainer: HTMLElement;
     dataColumns: Object;
 
     constructor(dataService: DataModule) { 
         this.sampleDataBtn = document.getElementById('fetchSampleDataBtn');
         this.introContainer = document.getElementById('introContainer');
         this.dataContainer = document.getElementById('dataContainer');
+        this.filtersContainer = document.getElementById('filtersContainer');
+
         this.dataService = dataService;
         this.viewsModule = new ViewsModule();
 
@@ -18,7 +21,9 @@ export class UIModule {
                 'ip': 'IP',
                 'method': 'Method',
                 'time': 'Date / Time',
-                'userAgent': 'User Agent'
+                'userAgent': 'User Agent',
+                'referrer': 'Referrer',
+                'statusCode': 'Status'
             };
 
         this.sampleDataBtn.addEventListener('click', this.dataBtnClick.bind(this));
@@ -35,8 +40,10 @@ export class UIModule {
 
             this.toggleDataView(true);
 
-            this.dataContainer.innerHTML = this.viewsModule.renderDataTable(parsedLog, this.dataColumns);
+            console.log(parsedLog[0]);
 
+            this.dataContainer.innerHTML = this.viewsModule.renderDataTable(parsedLog, this.dataColumns);
+            this.filtersContainer.innerHTML = this.viewsModule.renderFilterForm(this.dataColumns);
         }, function (error) {
             console.log(error);
         });
