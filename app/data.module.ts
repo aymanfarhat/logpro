@@ -5,8 +5,8 @@ export class DataModule extends Request {
     static sampleDataUrl: string;
     static accessLogLinePattern: string;
 
-    constructor () {
-        this.sampleDataUrl = 'https://gist.githubusercontent.com/aymanfarhat/4f6136ae457358c04708/raw/c8198a23b270825bf0420dc744fed90471eb750e/sample_access.log';
+    constructor (appConfig) {
+        this.sampleDataUrl = appConfig.sampleDataRemote;
         this.accessLogLinePattern = /(\S+) (\S) (.*?) \[(.*)\] "(\S+) (\S+) (\S+)" ([0-9]+) ([0-9]+|-) "(.*)" "(.*)"/;
     }
 

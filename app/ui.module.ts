@@ -2,36 +2,38 @@ import {DataModule} from './data.module.js';
 import {ViewsModule} from './views.module.js';
 
 export class UIModule {
-    sampleDataBtn : HTMLElement;
-    introContainer: HTMLElement;
-    dataContainer: HTMLElement;
-    filtersContainer: HTMLElement;
+    elements: Object;
     dataColumns: Object;
 
-    constructor(dataService: DataModule) { 
-        this.sampleDataBtn = document.getElementById('fetchSampleDataBtn');
-        this.introContainer = document.getElementById('introContainer');
-        this.dataContainer = document.getElementById('dataContainer');
-        this.filtersContainer = document.getElementById('filtersContainer');
-
+    constructor(appConfig: Object, dataService: DataModule) { 
         this.dataService = dataService;
         this.viewsModule = new ViewsModule();
 
-        this.dataColumns = {
-                'ip': 'IP',
-                'method': 'Method',
-                'time': 'Date / Time',
-                'userAgent': 'User Agent',
-                'referrer': 'Referrer',
-                'statusCode': 'Status'
-            };
+        this.dataColumns = appConfig.dataTableColumns;
 
-        this.sampleDataBtn.addEventListener('click', this.dataBtnClick.bind(this));
+        this.registerElements([
+            'sampleDataBtn',
+            'introContainer',
+            'dataContainer',
+            'filtersContainer'
+        ]);
+
+        this.registerEvents();
+    }
+
+    private registerElements(elementIds) {
+        for (element of elementIds) {
+            this.elements[element] = document.getElementById('sampleDataBtn');
+        }
+    };
+
+    private registerEvents() {
+        this.elements.sampleDataBtn.addEventListener('click', this.dataBtnClick.bind(this));
     }
 
     private toggleDataView(state: Boolean) {
-        this.introContainer.style.display = (state) ? 'none' : 'block';
-        this.dataContainer.style.display = (state) ? 'block' : 'none';
+        this.elements.introContainer.style.display = (state) ? 'none' : 'block';
+        this.elements.dataContainer.style.display = (state) ? 'block' : 'none';
     };
 
     private dataBtnClick() {
@@ -40,10 +42,8 @@ export class UIModule {
 
             this.toggleDataView(true);
 
-            console.log(parsedLog[0]);
-
-            this.dataContainer.innerHTML = this.viewsModule.renderDataTable(parsedLog, this.dataColumns);
-            this.filtersContainer.innerHTML = this.viewsModule.renderFilterForm(this.dataColumns);
+            this.elements.dataContainer.innerHTML = this.viewsModule.renderDataTable(parsedLog, this.dataColumns);
+            this.elements.filtersContainer.innerHTML = this.viewsModule.renderFilterForm(this.dataColumns);
         }, function (error) {
             console.log(error);
         });
