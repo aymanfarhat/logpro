@@ -27,6 +27,26 @@
             .container {
                 width: 98%; 
             }
+
+            #introContainer {
+                text-align: center; 
+            }
+
+            #introContainer .dropFileContainer {
+                padding: 75px 25px; 
+                border: 5px #CCC dashed;
+                font-size: 18px;
+            }
+
+            #introContainer .introText {
+                margin-bottom: 35px; 
+            }
+
+            #introContainer .divider {
+                margin: 25px 0;
+                font-size: 18px;
+                font-weight: bold;
+            }
         </style>
     </head>
   <body>
@@ -63,12 +83,18 @@
                         </div>
                         <div class="panel-body" id="contentPanel">
                             <div id="introContainer">
-                                <h2>Feed me an Access Log File!</h1>
-                                <h4>* Apache or Nginx in Common Log Format</h1>
+                                <div class="introText">
+                                    <h2>Feed me an Access Log File!</h1>
+                                    <h4>* Apache or Nginx in Common Log Format</h1>
+                                </div>
 
-                                <input type="file" id="uploadField" class="ui blue labeled icon button" />
-                                <div class="ui horizontal divider">Or</div>
-                                <button class="ui teal labeled icon button" type="button" id="sampleDataBtn">
+                                <div class="dropFileContainer">
+                                    Drop or <a href="#">upload</a> your file here.
+                                </div>
+
+                                <div class="divider">Or</div>
+
+                                <button class="btn btn-default" type="button" id="sampleDataBtn">
                                     Fetch a sample dataset
                                     <i class="random icon"></i>
                                 </button>
