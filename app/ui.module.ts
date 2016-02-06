@@ -10,7 +10,8 @@ export class UIModule {
         this.viewsModule = new ViewsModule();
 
         this.dataColumns = appConfig.dataTableColumns;
-        
+        this.dataQuery = {};
+
         this.elements = this.registerElements([
             'sampleDataBtn',
             'introContainer',
@@ -33,31 +34,43 @@ export class UIModule {
 
     private registerEvents() {
         this.elements.sampleDataBtn.addEventListener('click', this.dataBtnClick.bind(this));
+        this.on(document, '.filterElement', 'input', this.updateDataQuery.bind(this));
+    }
 
-        this.on(document, '.filterElement', 'input', (event) => {
-            let element = event.target;
+    private updateDataQuery(event) {
+        let element = event.target;
 
-            console.log(element.id + ' ' + element.value);
-        });
+        this.dataQuery[element.getAttribute('id')] = element.value;
+
+        let updatedData = this.dataService.filterDataCache(this.dataQuery);
+        this.renderDataView(updatedData);
     }
 
     private toggleDataView(state: Boolean) {
         this.elements.introContainer.style.display = (state) ? 'none' : 'block';
         this.elements.dataContainer.style.display = (state) ? 'block' : 'none';
-    };
+    }
 
     private dataBtnClick() {
         this.dataService.getSampleData().then((response) => {
             let parsedLog = this.dataService.parseAccessLogData(response);
 
-            this.toggleDataView(true);
+            this.renderFiltersView();
+            this.renderDataView(parsedLog);
 
-            this.elements.dataContainer.innerHTML = this.viewsModule.renderDataTable(parsedLog, this.dataColumns);
-            this.elements.filtersContainer.innerHTML = this.viewsModule.renderFilterForm(this.dataColumns);
+            this.toggleDataView(true);
         }, function (error) {
             console.log(error);
         });
-    };
+    }
+
+    private renderDataView(data) {
+        this.elements.dataContainer.innerHTML = this.viewsModule.renderDataTable(data, this.dataColumns);
+    }
+
+    private renderFiltersView() {
+        this.elements.filtersContainer.innerHTML = this.viewsModule.renderFilterForm(this.dataColumns);
+    }
 
     private on(parent, selector, action, callback) {
         parent.addEventListener(action, (event) => {

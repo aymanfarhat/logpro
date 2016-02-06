@@ -4,6 +4,7 @@ export class DataModule extends Request {
 
     static sampleDataUrl: string;
     static accessLogLinePattern: string;
+    static dataCache: Array;
 
     constructor (appConfig: Object) {
         this.sampleDataUrl = appConfig.sampleDataRemote;
@@ -39,6 +40,26 @@ export class DataModule extends Request {
             }
         }
 
+        this.dataCache = data;
+
         return data;
+    }
+
+    filterDataCache(criteria) {
+        let columns = Object.keys(criteria);
+            dataRows = this.dataCache,
+            results = [];
+
+        dataRows.forEach((row) => {
+            for (column of columns) {
+                if (!row[column].includes(criteria[column])  {
+                    return;
+                }
+            }
+
+            results.push(row);
+        });
+
+        return results;
     }
 }
