@@ -38,7 +38,7 @@ export class ViewsModule {
             bodyOutput += 
                 `<div class="form-group">
                     <label for="${colKey}">${columns[colKey]}</label>
-                    <input type="text" class="form-control" id="${colKey}" data-column="${colKey}" placeholder="${columns[colKey]}">
+                    <input type="text" class="form-control filterElement" id="${colKey}" data-column="${colKey}" placeholder="${columns[colKey]}">
                 </div>`;
         }
 

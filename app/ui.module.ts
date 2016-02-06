@@ -10,7 +10,7 @@ export class UIModule {
         this.viewsModule = new ViewsModule();
 
         this.dataColumns = appConfig.dataTableColumns;
-
+        
         this.elements = this.registerElements([
             'sampleDataBtn',
             'introContainer',
@@ -33,6 +33,12 @@ export class UIModule {
 
     private registerEvents() {
         this.elements.sampleDataBtn.addEventListener('click', this.dataBtnClick.bind(this));
+
+        this.on(document, '.filterElement', 'input', (event) => {
+            let element = event.target;
+
+            console.log(element.id + ' ' + element.value);
+        });
     }
 
     private toggleDataView(state: Boolean) {
@@ -52,4 +58,31 @@ export class UIModule {
             console.log(error);
         });
     };
+
+    private on(parent, selector, action, callback) {
+        parent.addEventListener(action, (event) => {
+            let selectorType = selector.substring(0, 1),
+                selectorName = selector.substring(1, selector.length);
+
+            if (selectorType === '#') {
+                let idAttr = event.target.getAttribute('id');
+
+                if (selectorName === idAttr) {
+                    callback.call(event.target, event);
+                }
+            } else if (selectorType === '.') {
+                let classAttr = event.target.getAttribute('class').split(' ');
+
+                if (classAttr.indexOf(selectorName) > 0) {
+                    callback.call(event.target, event);
+                }
+            } else {
+                let elementTagName = event.target.tagName.toLowerCase();
+
+                if (selector === elementTagName) {
+                    callback.call(event.target, event);
+                }
+            }
+        });
+    }
 }

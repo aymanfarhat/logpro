@@ -5,7 +5,7 @@ export class DataModule extends Request {
     static sampleDataUrl: string;
     static accessLogLinePattern: string;
 
-    constructor (appConfig) {
+    constructor (appConfig: Object) {
         this.sampleDataUrl = appConfig.sampleDataRemote;
         this.accessLogLinePattern = /(\S+) (\S) (.*?) \[(.*)\] "(\S+) (\S+) (\S+)" ([0-9]+) ([0-9]+|-) "(.*)" "(.*)"/;
     }
